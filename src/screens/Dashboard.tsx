@@ -1,7 +1,7 @@
 import { ButtonText, Header, Input, InputTypes, Layout, Modal, Settings, SizeScheme, Takoz } from '@19sth/react-native-pieces';
 import React, { useEffect, useState } from 'react';
 import ContentView from '../components/ContentView';
-import { faCheck, faCircleQuestion, faEdit, faFloppyDisk, faList, faTrashCan } from '@fortawesome/free-solid-svg-icons';
+import { faCheck, faCircleQuestion, faEdit, faList, faTrashCan } from '@fortawesome/free-solid-svg-icons';
 import { useAsyncStorage } from '@react-native-async-storage/async-storage';
 import { KEY_TASKS } from '../util';
 import { Pressable, Text, View } from 'react-native';
@@ -49,6 +49,26 @@ export default function Dashboard({ navigation }) {
             />
             <ContentView>
                 {
+                    tasks.length < 1 && (
+                        <View>
+                            <Takoz height={20}/>
+                            <Text style={{
+                                fontSize: SizeScheme.get().font.c,
+                                textAlign: 'center'
+                            }}>
+                                There is no task to do daily.
+                            </Text>
+                            <Takoz height={20}/>
+                            <ButtonText
+                                label='Add a Task'
+                                handleClick={()=>{
+                                    navigation.push('Definitions');
+                                }}/>
+                        </View>
+                    )
+                }
+                {
+                    tasks.length > 0 &&
                     tasks.map((e, i) => (
                         <View key={`task_${i}`}>
                             <DynamicListItem

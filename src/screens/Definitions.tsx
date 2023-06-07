@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { ButtonIcon, ButtonText, ColorScheme, Header, Input, InputTypes, Layout, Modal, Settings, SizeScheme, Takoz } from '@19sth/react-native-pieces';
-import { faAdd, faCartPlus, faFileArchive, faFileArrowDown, faRotateBack, faShoePrints, faStairs, faStepBackward } from '@fortawesome/free-solid-svg-icons';
+import { faAdd, faShoePrints, faSquarePlus } from '@fortawesome/free-solid-svg-icons';
 import ContentView from '../components/ContentView';
 import { useAsyncStorage } from '@react-native-async-storage/async-storage';
 import { KEY_DEFINITIONS, KEY_TASKS } from '../util';
@@ -49,6 +49,26 @@ export default function Definitions({ navigation }) {
 
                 <View>
                     {
+                        definitions.length < 1 && (
+                            <View>
+                                <Takoz height={20} />
+                                <Text style={{
+                                    fontSize: SizeScheme.get().font.c,
+                                    textAlign: 'center'
+                                }}>
+                                    There is definition.
+                                </Text>
+                                <Takoz height={20} />
+                                <ButtonText
+                                    label='Create A Definition'
+                                    handleClick={() => {
+                                        navigation.push('DefinitionEdit');
+                                    }} />
+                            </View>
+                        )
+                    }
+                    {
+                        definitions.length > 0 &&
                         definitions.map((e, i) => (
                             <Pressable key={`def_${i}`} onPress={() => {
                                 navigation.push('DefinitionEdit', { index: i });
@@ -64,12 +84,12 @@ export default function Definitions({ navigation }) {
                                     paddingBottom: 5
                                 }}>
                                     <ButtonIcon
-                                        faIcon={faCartPlus}
+                                        faIcon={faSquarePlus}
                                         handleClick={() => {
                                             setDefIndex(i);
                                             setTaskNote('');
                                             setModalVisible(true);
-                                        }}/>
+                                        }} />
                                     <View style={{
                                         flex: 1,
                                         paddingHorizontal: 10
@@ -85,13 +105,13 @@ export default function Definitions({ navigation }) {
                                         flexDirection: 'row',
                                         alignItems: 'center'
                                     }}>
-                                    <Text style={{
-                                        fontSize: SizeScheme.get().font.d
-                                    }}>
-                                        {e.steps.length}
-                                    </Text>
-                                    <Takoz width={5}/>
-                                    <FontAwesomeIcon icon={faShoePrints}/>
+                                        <Text style={{
+                                            fontSize: SizeScheme.get().font.d
+                                        }}>
+                                            {e.steps.length}
+                                        </Text>
+                                        <Takoz width={5} />
+                                        <FontAwesomeIcon icon={faShoePrints} />
                                     </View>
                                 </View>
                             </Pressable>
@@ -101,10 +121,10 @@ export default function Definitions({ navigation }) {
 
                 <Modal
                     visible={modalVisible}
-                    handleClose={()=>{
+                    handleClose={() => {
                         setModalVisible(false);
                     }}
-                    style={{height: 350}}>
+                    style={{ height: 375 }}>
 
                     <View>
                         <Input
@@ -112,8 +132,8 @@ export default function Definitions({ navigation }) {
                             type={InputTypes.TEXT}
                             settings={[Settings.TEXT_MULTILINE_6]}
                             value={[taskNote]}
-                            handleChange={val=>{setTaskNote(val[0])}}/>
-                        <Takoz height={20}/>
+                            handleChange={val => { setTaskNote(val[0]) }} />
+                        <Takoz height={10} />
                         <ButtonText
                             label='Add Task'
                             handleClick={async () => {
@@ -127,11 +147,11 @@ export default function Definitions({ navigation }) {
                                     definitionIndex: defIndex,
                                     title: definitions[defIndex].title,
                                     steps: definitions[defIndex].steps,
-                                    checked: definitions[defIndex].steps.map(_=>false)
+                                    checked: definitions[defIndex].steps.map(_ => false)
                                 });
                                 await asyncStoreTasks.setItem(JSON.stringify(tasks));
                                 navigation.goBack();
-                            }}/>
+                            }} />
                     </View>
 
                 </Modal>
