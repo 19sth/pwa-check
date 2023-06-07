@@ -1,6 +1,6 @@
 {
   "files": {
-    "main.js": "/pwa-check/static/js/main.9059e820.js",
+    "main.js": "/pwa-check/static/js/main.17051669.js",
     "static/js/773.de74b73d.js": "/pwa-check/static/js/773.de74b73d.js",
     "favicon.ico": "/pwa-check/favicon.ico",
     "index.html": "/pwa-check/index.html",
@@ -8,11 +8,11 @@
     "favicon-16.png": "/pwa-check/favicon-16.png",
     "serve.json": "/pwa-check/serve.json",
     "manifest.json": "/pwa-check/manifest.json",
-    "main.9059e820.js.map": "/pwa-check/static/js/main.9059e820.js.map",
+    "main.17051669.js.map": "/pwa-check/static/js/main.17051669.js.map",
     "773.de74b73d.js.map": "/pwa-check/static/js/773.de74b73d.js.map"
   },
   "entrypoints": [
     "static/js/773.de74b73d.js",
-    "static/js/main.9059e820.js"
+    "static/js/main.17051669.js"
   ]
 }
