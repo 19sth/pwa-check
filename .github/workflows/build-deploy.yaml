@@ -19,7 +19,7 @@ jobs:
           node-version: '18.x'
 
       - name: test
-        run: echo HELLOWORLD
+        run: echo HELLOWORLD1
 
       - name: Install dependencies
         run: npm install
