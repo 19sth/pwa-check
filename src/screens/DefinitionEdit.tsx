@@ -63,7 +63,7 @@ export default function DefinitionEdit({ navigation, route }) {
                             if (route.params && route.params.index !== undefined) {
                                 definitions[route.params.index] = {
                                     title,
-                                    "steps" : steps.map(e=>{e:e.content})
+                                    "steps" : steps.map(e=>e.content)
                                 }
                             } else {
                                 definitions.push({
