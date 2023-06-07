@@ -38,7 +38,7 @@ export default function Dashboard({ navigation }) {
                 title='Check'
                 buttons={[
                     { faIcon: faCircleQuestion, handleClick: () => { 
-                        window.open("https://mujdecisy.github.io/app/check-multi-defined-tasks", "blank");
+                        window.open("https://mujdecisy.github.io/app/check-defined-tasks", "blank");
                      } },
                     {
                         faIcon: faList, handleClick: () => {
