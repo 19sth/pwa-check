@@ -1,6 +1,5 @@
-import { ButtonIcon, SizeScheme } from '@19sth/react-native-pieces';
-import { IconDefinition, faAngleDown, faAngleUp, faCheck, faEllipsisVertical, faTrashCan } from '@fortawesome/free-solid-svg-icons';
-import React, { useEffect, useState } from 'react';
+import { ButtonIcon, ColorScheme, SizeScheme } from '@19sth/react-native-pieces';
+import { IconDefinition, faEllipsisVertical } from '@fortawesome/free-solid-svg-icons';
 import { Text, View } from 'react-native';
 
 interface DynamicListItemProps {
@@ -21,6 +20,7 @@ export default function DynamicListItem(props: DynamicListItemProps) {
         return (
             <View key={`dynamicItem_${props.index}`} style={{
                 height: props.height,
+                marginTop: 10,
                 display: 'flex',
                 flexDirection: 'row',
                 justifyContent: 'space-between',
@@ -51,7 +51,8 @@ export default function DynamicListItem(props: DynamicListItemProps) {
             }}>
                 <Text style={{
                     fontSize: SizeScheme.get().font.d,
-                    fontWeight: 'bold'
+                    fontWeight: 'bold',
+                    color: ColorScheme.get().secondary
                 }}>
                     {props.index+1}
                 </Text>

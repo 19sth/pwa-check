@@ -1,9 +1,10 @@
 import * as React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import Active from './src/screens/Active';
+import Dashboard from './src/screens/Dashboard';
 import Definitions from './src/screens/Definitions';
 import DefinitionEdit from './src/screens/DefinitionEdit';
+import Task from './src/screens/Task';
 
 const Stack = createNativeStackNavigator();
 
@@ -12,8 +13,8 @@ export default function App() {
     <NavigationContainer>
       <Stack.Navigator>
           <Stack.Screen
-            name="Active"
-            component={Active}
+            name="Dashboard"
+            component={Dashboard}
             options={{ headerShown: false }}
           />
           <Stack.Screen
@@ -24,6 +25,11 @@ export default function App() {
           <Stack.Screen
             name="DefinitionEdit"
             component={DefinitionEdit}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="Task"
+            component={Task}
             options={{ headerShown: false }}
           />
       </Stack.Navigator>

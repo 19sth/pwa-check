@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { ButtonIcon, Header, Input, InputTypes, Layout, SizeScheme, Takoz } from '@19sth/react-native-pieces';
-import ContentView from '../components/ContentView';
+import ContentView, { ViewType } from '../components/ContentView';
 import { Text, View } from 'react-native';
 import { IconDefinition, faAdd, faAngleDown, faAngleUp, faCheck, faFloppyDisk, faTrash, faTrashCan } from '@fortawesome/free-solid-svg-icons';
-import { KEY_DEFINITIONS } from '../util';
+import { KEY_DEFINITIONS, KEY_TASKS } from '../util';
 import { useAsyncStorage } from '@react-native-async-storage/async-storage';
 import DynamicListItem from '../components/DynamicListItem';
 
@@ -15,7 +15,8 @@ export default function DefinitionEdit({ navigation, route }) {
     const load = async () => {
         const defStr = await getItem();
         const defs = JSON.parse(defStr);
-        setSteps(defs[route.params.index].steps);
+        setSteps(defs[route.params.index].steps.map(e=>({content: e, showOptions: false})));
+        setTitle(defs[route.params.index].title);
     }
 
     useEffect(() => {
@@ -24,7 +25,7 @@ export default function DefinitionEdit({ navigation, route }) {
         }
     }, [route.params]);
 
-    let deleteButton = [] as {
+    const deleteButton = [] as {
         faIcon: IconDefinition;
         handleClick: () => void;
     }[];
@@ -58,10 +59,18 @@ export default function DefinitionEdit({ navigation, route }) {
                             }
 
                             const definitions = JSON.parse(defString);
-                            definitions.push({
-                                "title": title,
-                                "steps": steps
-                            });
+
+                            if (route.params && route.params.index !== undefined) {
+                                definitions[route.params.index] = {
+                                    title,
+                                    "steps" : steps.map(e=>{e:e.content})
+                                }
+                            } else {
+                                definitions.push({
+                                    title,
+                                    "steps" : steps.map(e=>e.content)
+                                });
+                            }
 
                             setItem(JSON.stringify(definitions));
 
@@ -70,7 +79,7 @@ export default function DefinitionEdit({ navigation, route }) {
                     }
                 ]}
             />
-            <ContentView>
+            <ContentView viewType={ViewType.SCROLLVIEW}>
 
                 <Input
                     label='Title'
@@ -101,7 +110,7 @@ export default function DefinitionEdit({ navigation, route }) {
                             index={i}
                             buttons={[
                                 {
-                                    faIcon: faAngleUp, handleClick: (ix) => {
+                                    faIcon: faAngleUp, handleClick: ix => {
                                         if (ix > 0) {
                                             const tSteps = [...steps];
                                             const temp = tSteps[ix];
@@ -112,7 +121,7 @@ export default function DefinitionEdit({ navigation, route }) {
                                     }
                                 },
                                 {
-                                    faIcon: faAngleDown, handleClick: (ix) => {
+                                    faIcon: faAngleDown, handleClick: ix => {
                                         if (ix < steps.length - 1) {
                                             const tSteps = [...steps];
                                             const temp = tSteps[ix];
@@ -123,14 +132,14 @@ export default function DefinitionEdit({ navigation, route }) {
                                     }
                                 },
                                 {
-                                    faIcon: faTrashCan, handleClick: (ix) => {
+                                    faIcon: faTrashCan, handleClick: ix => {
                                         const tSteps = [...steps];
                                         tSteps.splice(ix, 1);
                                         setSteps(tSteps);
                                     }
                                 },
                                 {
-                                    faIcon: faCheck, handleClick: (ix) => {
+                                    faIcon: faCheck, handleClick: ix => {
                                         const tSteps = [...steps];
                                         tSteps[ix].showOptions = !tSteps[ix].showOptions;
                                         setSteps(tSteps);
@@ -138,8 +147,8 @@ export default function DefinitionEdit({ navigation, route }) {
                                 },
                             ]}
                             showOptions={steps[i].showOptions}
-                            openShowOptions={(ix)=>{
-                                if (steps.every(ex=>ex.showOptions===false)) {
+                            openShowOptions={ix => {
+                                if (steps.every(ex => ex.showOptions === false)) {
                                     const tSteps = [...steps];
                                     tSteps[ix].showOptions = !tSteps[ix].showOptions;
                                     setSteps(tSteps);

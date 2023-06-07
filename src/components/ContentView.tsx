@@ -8,18 +8,17 @@ export enum ViewType {
 }
 
 export default function ContentView({ viewType, children }: { viewType?: ViewType, children: React.ReactNode }) {
-    const viewStyle = { minHeight: SizeScheme.get().screen.height.min - 145 }
-
+    const height = SizeScheme.get().screen.height.min - 145;
     let view;
     if (viewType === ViewType.SCROLLVIEW) {
         view = (
-            <ScrollView style={viewStyle}>
+            <ScrollView style={{height}}>
                 {children}
             </ScrollView>
         );
     } else {
         view = (
-            <View style={viewStyle}>
+            <View style={{minHeight: height}}>
                 {children}
             </View>
         );
